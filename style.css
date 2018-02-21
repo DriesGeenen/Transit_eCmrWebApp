@@ -1,0 +1,84 @@
+.marginTop-20 {
+    margin-top: 20px;
+}
+.marginTop-100 {
+    margin-top: 100px;
+}
+.marginRight-20 {
+    margin-right: 20px;
+}
+html, body {
+    background-image: url("dev/assets/bg.png");
+    height:100% !important;
+}
+.container {
+    background-color: white;
+    height:100% !important;
+}
+#container {
+    height:100% !important;
+}
+.fill {
+    height:100% !important;
+}
+
+/* label focus color */
+.input-field input:focus + label {
+    color: #ed7010 !important;
+}
+/* label underline focus color */
+.row .input-field input:focus {
+    border-bottom: 1px solid #ed7010 !important;
+    box-shadow: 0 1px 0 0 #ed7010 !important
+}
+
+.brand-logo {
+    margin-left:75px;
+}
+
+#nav-mobile li:hover {
+    background-color: #212121;
+}
+#nav-mobile li:active {
+    background-color: #212121;
+}
+
+#nav-mobile li a:hover {
+    color: white;
+    text-decoration: none;
+}
+#nav-mobile li a:active {
+    color: white;
+    text-decoration: none;
+}
+#nav-mobile li a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.button-dashboard {
+    width: 300px;
+    height: 250px !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-container {
+    display: table;
+}
+
+.table-item {
+    height:250px !important;
+    color: #fff;
+    display: table-cell;
+    padding: 10px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table-item.first {
+    background: #eb7511;
+    font-size: 20px;
+    text-align: center;
+    width:20%;
+}
