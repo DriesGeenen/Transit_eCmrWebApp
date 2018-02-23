@@ -5,10 +5,10 @@ const Dashboard = (props) => {
     return(
         <div className="center marginTop-100">
             <div className="table-container">
-                <Link to={`/current`} className="table-item first">Current CMR</Link>
+                <Link to={`/ecmr`} className="table-item first">Current CMR</Link>
             </div>
             <div className="table-container marginTop-20">
-                <Link to={`/finished`} className="table-item first">Finished CMR's</Link>
+                <Link to={`/ecmr/finished`} className="table-item first">Finished CMR's</Link>
             </div>
         </div>
     );

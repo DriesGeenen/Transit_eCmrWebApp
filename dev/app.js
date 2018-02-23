@@ -6,7 +6,6 @@ import LoginStore from "./Components/Mobx/LoginStore";
 
 import Navbar from './components/navbar';
 import EcmrReader from './containers/ecmr_reader';
-import Current from './components/current';
 import Login from './components/login';
 import Dashboard from './components/dashboard';
 
@@ -15,8 +14,7 @@ const Main = () => (
         <Switch>
             <Route exact path='/login' component={Login} />
             <Route exact path='/dashboard' component={Dashboard} />
-            <Route exact path='/finished' component={EcmrReader}/>
-            <Route exact path='/current' component={Current}/>
+            <Route path='/ecmr/:finished?' component={EcmrReader}/>
         </Switch>
     </div>
 )
