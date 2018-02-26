@@ -82,3 +82,9 @@ html, body {
     text-align: center;
     width:20%;
 }
+
+.orangeColor {
+    background: #eb7511 !important;
+    font-size: 15px;
+    text-align: center;
+}

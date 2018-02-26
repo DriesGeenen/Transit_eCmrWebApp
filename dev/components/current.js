@@ -7,99 +7,65 @@ class Current extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {firstName:'',lastName:'',email:'',phone:'',role:'user'},
-            checked: false,
-            output: ""
+            address: "",
+            city: "",
+            receiver: "",
+            finished: ""
         };
 
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onChangePassClick = this.onChangePassClick.bind(this);
+        this.onFinished = this.onFinished.bind(this);
     }
 
     componentDidMount() {
-        axios.get('http://localhost:6601/users/'+this.props.match.params.id)
+        axios.get('http://localhost:6603/ecmrs/'+this.props.match.params.id)
             .then(res => {
-                this.setState({ user: res.data.data });
+                var finished = "";
+                this.setState({
+                    address: res.data.data.deliveryLocation.address,
+                    city: res.data.data.deliveryLocation.city,
+                    receiver: res.data.data.receiver.company
+                });
 
-                if (this.state.user.role === "admin"){
-                    let check = true;
-                    this.setState({checked: check});
+                if(!res.data.data.finished){
+                    finished = (
+                        <button className="btn btn-default orangeColor" onClick={this.onFinished}>ECMR finished</button>
+                    );
+                    this.setState({ finished: finished });
                 }
             });
     }
 
-    onChange(e) {
-        if(e.target.type === 'checkbox'){
-            let role = e.target.checked? "admin" : "user";
-            const state = this.state.user;
-            state[e.target.name] = role;
-            this.setState({user:state, checked: e.target.checked});
-        } else {
-            const state = this.state.user;
-            state[e.target.name] = e.target.value;
-            this.setState({user:state});
-        }
-    }
-
-    onSubmit(e) {
-        e.preventDefault();
-
-        const { firstName, lastName, password, email, phone, role } = this.state.user;
-
-        axios.put('http://localhost:6600/auth/update/'+this.props.match.params.id, { firstName, lastName, password, email, phone, role })
-            .then((result) => {
-                this.props.history.push("/users");
+    onFinished() {
+        axios.patch('http://localhost:6603/ecmrs/update/'+this.props.match.params.id)
+            .then(res => {
+                this.props.history.push('/dashboard');
             });
-    }
-
-    onChangePassClick(e){
-        const output = (
-            <div className="form-group"><label htmlFor="password">Wachtwoord:</label>
-            <input type="password" className="form-control" name="password" onChange={this.onChange} placeholder="Nieuw wachtwoord" /></div>
-        );
-
-        this.setState({output: output});
     }
 
     render() {
         return (
             <div className="container">
-                <div className="panel panel-default">
+                <div className="panel panel-default marginTop-20">
                     <div className="panel-heading">
                         <h3 className="panel-title">
-                            Gebruiker bewerken
+                            Current CMR
                         </h3>
                     </div>
                     <div className="panel-body">
-                        <form onSubmit={this.onSubmit}>
-                            <div className="form-group">
-                                <label htmlFor="firstName">Voornaam:</label>
-                                <input type="text" className="form-control" name="firstName" value={this.state.user.firstName} onChange={this.onChange} placeholder="Voornaam" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="lastName">Achternaam:</label>
-                                <input type="text" className="form-control" name="lastName" value={this.state.user.lastName} onChange={this.onChange} placeholder="Achternaam" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="email">Email:</label>
-                                <input type="text" className="form-control" name="email" value={this.state.user.email} onChange={this.onChange} placeholder="Email" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="phone">Telefoon:</label>
-                                <input type="text" className="form-control" name="phone" value={this.state.user.phone} onChange={this.onChange} placeholder="Telefoon" />
-                            </div>
-                            <div>
-                                <label htmlFor="role">Admin:</label>
-                                <input type="checkbox" className="form-control" name="role" onChange={this.onChange} checked={this.state.checked} />
-                            </div>
-                            <div className="form-group marginTop-20">
-                                <a onClick={this.onChangePassClick}>Wachtwoord wijzigen</a>
-                            </div>
-                            {this.state.output}
-                            <button type="submit" className="btn btn-primary">Opslaan</button>
-                            <Link className="btn btn-default" to={`/users`}>Annuleren</Link>
-                        </form>
+                        <div className="form-group">
+                            <label htmlFor="address">Address:</label>
+                            <input type="text" name="address" value={this.state.address} readOnly />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="city">City:</label>
+                            <input type="text" name="city" value={this.state.city} readOnly />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="receiver">Name receiver:</label>
+                            <input type="text" name="receiver" value={this.state.receiver} readOnly />
+                        </div>
+                        <button className="btn btn-default orangeColor marginRight-20" onClick={this.props.history.goBack}>Go back</button>
+                        {this.state.finished}
                     </div>
                 </div>
             </div>

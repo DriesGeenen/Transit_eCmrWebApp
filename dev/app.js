@@ -8,6 +8,7 @@ import Navbar from './components/navbar';
 import EcmrReader from './containers/ecmr_reader';
 import Login from './components/login';
 import Dashboard from './components/dashboard';
+import Current from './components/current';
 
 const Main = () => (
     <div className="content container">
@@ -15,6 +16,7 @@ const Main = () => (
             <Route exact path='/login' component={Login} />
             <Route exact path='/dashboard' component={Dashboard} />
             <Route path='/ecmr/:finished?' component={EcmrReader}/>
+            <Route exact path='/details/:id' component={Current} />
         </Switch>
     </div>
 )

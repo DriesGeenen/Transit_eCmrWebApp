@@ -52,7 +52,7 @@ export default inject("LoginStore")(observer(class EcmrReaderContainer extends C
     render() {
         return (
             <div>
-                <EcmrReader ecmrs={this.state.ecmrs}/>
+                <EcmrReader ecmrs={this.state.ecmrs} finished={this.props.match.params.finished}/>
             </div>
             /*<UserReader users={this.state.users} />*/
         );
