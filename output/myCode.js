@@ -34261,7 +34261,8 @@ exports.default = (0, _mobxReact.inject)("LoginStore")((0, _mobxReact.observer)(
 
         _this.state = {
             email: '',
-            password: ''
+            password: '',
+            output: ''
         };
 
         _this.onEmailChange = _this.onEmailChange.bind(_this);
@@ -34289,6 +34290,18 @@ exports.default = (0, _mobxReact.inject)("LoginStore")((0, _mobxReact.observer)(
 
             if (this.props.LoginStore.LoggedIn) {
                 this.props.history.push('/dashboard');
+            } else {
+                var output = _react2.default.createElement(
+                    'p',
+                    null,
+                    _react2.default.createElement(
+                        'b',
+                        null,
+                        'Login failed'
+                    )
+                );
+
+                this.setState({ output: output });
             }
         }
     }, {
@@ -34309,6 +34322,7 @@ exports.default = (0, _mobxReact.inject)("LoginStore")((0, _mobxReact.observer)(
                             )] },
                         _react2.default.createElement(_reactMaterialize.Input, { id: 'icon_prefix', s: 12, label: 'E-mail', value: this.state.email, onChange: this.onEmailChange, type: 'text' }),
                         _react2.default.createElement(_reactMaterialize.Input, { s: 12, label: 'Password', value: this.state.password, onChange: this.onPasswordChange, type: 'password' }),
+                        this.state.output,
                         _react2.default.createElement('div', { className: 'clearfix' })
                     )
                 )

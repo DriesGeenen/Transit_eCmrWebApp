@@ -8,7 +8,8 @@ export default inject("LoginStore")(observer(class Login extends Component {
 
         this.state = {
             email:'',
-            password:''
+            password:'',
+            output: ''
         };
 
         this.onEmailChange = this.onEmailChange.bind(this);
@@ -31,6 +32,12 @@ export default inject("LoginStore")(observer(class Login extends Component {
 
         if(this.props.LoginStore.LoggedIn){
             this.props.history.push('/dashboard');
+        } else {
+            var output = (
+                <p><b>Login failed</b></p>
+            );
+
+            this.setState({output: output});
         }
     }
 
@@ -40,6 +47,7 @@ export default inject("LoginStore")(observer(class Login extends Component {
                 <Card className='input-field darken-1 z-depth-4' textClassName='' title='Login' actions={[<Button key="loginButton" className="orange darken-3" onClick={this.onLogin} waves='light'>Login</Button>]}>
                     <Input id="icon_prefix" s={12} label="E-mail" value={this.state.email} onChange={this.onEmailChange} type="text" />
                     <Input s={12} label="Password" value={this.state.password} onChange={this.onPasswordChange} type="password" />
+                    {this.state.output}
                     <div className="clearfix" />
                 </Card>
             </div>
