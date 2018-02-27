@@ -10,7 +10,8 @@ class Current extends Component {
             address: "",
             city: "",
             receiver: "",
-            finished: ""
+            finished: "",
+            ecmrId: ""
         };
 
         this.onFinished = this.onFinished.bind(this);
@@ -23,9 +24,11 @@ class Current extends Component {
                 this.setState({
                     address: res.data.data.deliveryLocation.address,
                     city: res.data.data.deliveryLocation.city,
-                    receiver: res.data.data.receiver.company
+                    receiver: res.data.data.receiver.company,
+                    ecmrId: res.data.data._id
                 });
 
+                console.log(res.data.data._id);
                 if(!res.data.data.finished){
                     finished = (
                         <button className="btn btn-default orangeColor" onClick={this.onFinished}>ECMR finished</button>
@@ -38,8 +41,13 @@ class Current extends Component {
     onFinished() {
         axios.patch('http://localhost:6603/ecmrs/update/'+this.props.match.params.id)
             .then(res => {
-                this.props.history.push('/dashboard');
+                axios.delete('http://localhost:6609/trackings/delete/'+this.state.ecmrId)
+                    .then(ress => {
+                        this.props.history.push('/dashboard');
+                    });
             });
+
+
     }
 
     render() {

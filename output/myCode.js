@@ -55974,7 +55974,8 @@ var Current = function (_Component) {
             address: "",
             city: "",
             receiver: "",
-            finished: ""
+            finished: "",
+            ecmrId: ""
         };
 
         _this.onFinished = _this.onFinished.bind(_this);
@@ -55991,9 +55992,11 @@ var Current = function (_Component) {
                 _this2.setState({
                     address: res.data.data.deliveryLocation.address,
                     city: res.data.data.deliveryLocation.city,
-                    receiver: res.data.data.receiver.company
+                    receiver: res.data.data.receiver.company,
+                    ecmrId: res.data.data._id
                 });
 
+                console.log(res.data.data._id);
                 if (!res.data.data.finished) {
                     finished = _react2.default.createElement(
                         'button',
@@ -56010,7 +56013,10 @@ var Current = function (_Component) {
             var _this3 = this;
 
             _axios2.default.patch('http://localhost:6603/ecmrs/update/' + this.props.match.params.id).then(function (res) {
-                _this3.props.history.push('/dashboard');
+                //todo: axios delete tracking code
+                _axios2.default.delete('http://localhost:6609/trackings/delete/' + _this3.state.ecmrId).then(function (ress) {
+                    _this3.props.history.push('/dashboard');
+                });
             });
         }
     }, {
