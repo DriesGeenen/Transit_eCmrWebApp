@@ -22,13 +22,12 @@ class Current extends Component {
             .then(res => {
                 var finished = "";
                 this.setState({
-                    address: res.data.data.deliveryLocation.address,
-                    city: res.data.data.deliveryLocation.city,
+                    address: res.data.data.confirmedDelivery.location.address,
+                    city: res.data.data.confirmedDelivery.location.city,
                     receiver: res.data.data.receiver.company,
                     ecmrId: res.data.data._id
                 });
 
-                console.log(res.data.data._id);
                 if(!res.data.data.finished){
                     finished = (
                         <button className="btn btn-default orangeColor" onClick={this.onFinished}>ECMR finished</button>
